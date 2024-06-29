@@ -1,0 +1,46 @@
+.calcBtn,
+.operator,
+.zero {
+  height: 60px;
+  padding: 0;
+  cursor: pointer;
+  border: 1px solid #4d4d4f;
+  box-shadow: 0 4px 8px #0000001a;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.calcBtn {
+  background-color: #333335;
+  color: #fff;
+  width: 60px;
+  border-radius: 50%;
+  font-size: 24px;
+}
+
+.calcBtn:hover,
+.zero:hover {
+  background-color: #605f5ffe;
+}
+
+.operator {
+  background-color: #ffb342;
+  width: 60px;
+  border-radius: 50%;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.opactiy {
+  opacity: 70%;
+}
+
+.zero {
+  width: 130px;
+  background-color: #333335;
+  border-radius: 50px;
+  height: 70px;
+  text-align: left;
+  padding-left: 30px;
+  font-size: 24px;
+}

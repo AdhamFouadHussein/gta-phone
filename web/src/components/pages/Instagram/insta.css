@@ -1,0 +1,36 @@
+.tv::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  right: 3px;
+  top: 7px;
+  background-color: rgb(197, 18, 18);
+  border-radius: 50px;
+}
+
+.tv::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background-color: aliceblue;
+  top: 50%;
+  left: 30%;
+}
+
+.statusBg {
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #405de6 0%,
+    #5851db 5%,
+    #833ab4 45%,
+    #d6249f 60%,
+    #fd1d1d 90%
+  );
+}
+
+/* .newSwiper.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+} */

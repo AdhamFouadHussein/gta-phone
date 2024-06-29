@@ -1,0 +1,20 @@
+.header {
+    position: absolute;
+    inset: 0;
+    height: 5rem;
+    width: 100%;
+    border-radius: 35px 35px 0 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10px 5px;
+}
+
+.chat {
+    background-image: url("../../assets/images/whatsappBG.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    border-radius: 35px 35px 0 0;
+}

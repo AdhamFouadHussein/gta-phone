@@ -1,0 +1,49 @@
+.setting-block {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-items: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.setting-block ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 0 10px 20px;
+}
+
+.setting-block ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.setting-block ul li:hover {
+    opacity: 0.8;
+    background-color: #f0f0f0;
+
+}
+
+.setting-block ul li div {
+    height: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 4px;
+
+}
+
+.setting-block ul li:not(:last-of-type)>div {
+    border-bottom: 1px solid #c7c7cc;
+}
