@@ -10,10 +10,8 @@ RegisterNUICallback('addPost', function(data, cb)
   
     local post = data.post
     local user = data.user
-    local QBCore = exports['qb-core']:GetCoreObject()
     ---local citizenid = QBCore.Functions.GetPlayerData().citizenid
     ---data.user.UserID = citizenid
-    print('Citizen ID Data', data.user.UserID)
     TriggerServerEvent('fivem-react-boilerplate-lua:addPost', post, user)
     cb({})
 end)
