@@ -53,7 +53,7 @@ const HomePhone = () => {
         </div>
       )} */}
       <div className=" px-3 pt-[50px] flex justify-center items-center mx-auto gap-3">
-        {/* Static Apps */}
+        {/* Static apps */}
         <div className="w-[48%] text-center">
           <div className="relative ">
             <img src={clock} alt="" className="w-full" />
@@ -83,7 +83,7 @@ const HomePhone = () => {
         </div>
       </div>
 
-      {/* Dynamic Apps */}
+      {/* Dynamic apps */}
       <div className="px-3 mt-2 w-full flex items-center">
         <HomeApps
           openedFolder={openedFolder}

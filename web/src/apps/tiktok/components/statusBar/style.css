@@ -1,0 +1,20 @@
+.status-bar {
+    padding-block: 20px;
+    padding-inline: 25px;
+    background-color: transparent;
+    color: white;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.clock {
+
+}
+
+.icons {
+    display: flex;
+    align-content: center;
+    justify-items: center;
+    gap: 5px;
+}

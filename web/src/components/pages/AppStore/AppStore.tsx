@@ -245,6 +245,7 @@ const AppStore: React.FC = () => {
     };
 
     const handleSelectedApp = (id: number) => {
+        console.log(id)
         const app = appList.find((app) => app.id === id);
         setSelectedApp(app || appList[0]);
         setOpenApp(true);
@@ -300,7 +301,7 @@ const AppStore: React.FC = () => {
                 </button>
             </div>
 
-            {/* Apps */}
+            {/* apps */}
             <div className="appStore-apps flex flex-col justify-between items-start h-[85%] w-full bg-[#131314] my-5 py-3 px-3 overflow-hidden overflow-y-auto noScroll">
                 {appList.map((app) => (
                     <div

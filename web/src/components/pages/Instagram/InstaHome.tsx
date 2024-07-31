@@ -163,6 +163,7 @@ const InstaHome = () => {
 
     const handleGetMyStory = () => {
         fetchNui("getStory", { UserID: user?.UserID });
+
     };
 
     const handleOpenMyStory = () => {

@@ -1,0 +1,42 @@
+.signup-page-container {
+
+}
+
+.signup-title {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+.sign-uo-description {
+    text-align: center;
+    font-size: 14px;
+    color: #4d4d4f;
+    margin-block: 10px;
+    padding-inline: 20px;
+}
+
+.option-list-wrapper {
+    padding-inline: 20px;
+}
+
+.sign-up-footer {
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    font-size: 16px;
+    z-index: 20;
+    width: 100%;
+    height: 10%;
+}
+
+.footer-text {
+    color: black;
+}
+
+.sign-up-link {
+    font-weight: 600;
+    color: #d6249f;
+}

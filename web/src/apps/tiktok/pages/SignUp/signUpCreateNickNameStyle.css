@@ -1,0 +1,67 @@
+/* Container for the nickname page */
+.nickname-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: black;
+}
+
+/* Title styling */
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+}
+
+/* Description styling */
+.description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+/* Form styling */
+.nickname-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+
+}
+
+/* Nickname input styling */
+.nickname-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+}
+
+/* Character counter styling */
+.char-counter {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Confirm button styling */
+.confirm-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #EA4359;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirm-button:hover {
+    background-color: #333;
+}

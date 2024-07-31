@@ -1,0 +1,16 @@
+.tab-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    gap: 5px;
+}
+
+.tab-bar-item:hover {
+    cursor: pointer;
+}
+
+.tab-bar-item-label {
+    font-size: 10px;
+}

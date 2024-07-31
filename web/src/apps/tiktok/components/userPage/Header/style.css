@@ -1,0 +1,14 @@
+.user-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 11px;
+    padding-inline: 20px;
+    border-bottom: 1px solid rgba(134, 135, 139, 0.32);
+}
+
+.user-name {
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+}

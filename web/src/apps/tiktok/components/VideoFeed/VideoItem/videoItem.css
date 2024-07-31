@@ -1,0 +1,28 @@
+/* components/VideoItem/VideoItem.css */
+.video-item {
+    /*height: 100vh;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* components/VideoFeed/VideoFeed.css */
+.video-feed {
+    /*height: 100vh;*/
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.video-feed::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
