@@ -1,0 +1,84 @@
+/* Title styling */
+.signup-form-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Tab selector container */
+.form-tab-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #e6e6e6;
+    gap: 50px;
+}
+
+/* Individual tab item styling */
+.tab-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #999999;
+    position: relative;
+}
+
+/* Active tab item styling */
+.tab-item.active {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Indicator line under the active tab */
+.tab-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #000;
+}
+
+/* Form styling */
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sign-up-form input {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+}
+
+.sign-up-form div {
+    text-align: center;
+    font-size: 12px;
+    color: #999999;
+    margin-bottom: 20px;
+}
+
+.sign-up-form button {
+    margin-top: 20px;
+    width: 300px;
+    padding: 10px;
+    background-color: #EA4359;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sign-up-form button:hover {
+    background-color: #333;
+}
+.sign-up-terms{
+    font-size: 16px;
+    width: 300px;
+    text-align: left;
+}

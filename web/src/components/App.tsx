@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, {useState} from "react";
+import {Route, Routes} from "react-router-dom";
 import Header from "./components/ui/Header/Header";
 import HomePhone from "./pages/Home system/Home phone/HomePhone";
 import HomeBar from "./components/ui/HomeBar/HomeBar";
@@ -8,11 +8,11 @@ import AppStore from "./pages/AppStore/AppStore";
 import Keyboard from "./pages/CallApp/Keyboard/Keyboard";
 import Gallery from "./pages/Gallery/Gallery";
 import Battery from "./pages/Home system/Battery/Battery";
-import { AnimatePresence } from "framer-motion";
-import { debugData } from "../utils/debugData.js";
+import {AnimatePresence} from "framer-motion";
+import {debugData} from "../utils/debugData.js";
 import Settings from "./pages/Settings/Settings";
 import Whatsapp from "./pages/Whatsapp/Whatsapp";
-import { fetchNui } from "../utils/fetchNui";
+import {fetchNui} from "../utils/fetchNui";
 import LoginPage from "./pages/Instagram/LoginPage";
 import InstaSignUp from "./pages/Instagram/InstaSignUp";
 import InstaHome from "./pages/Instagram/InstaHome";
@@ -26,8 +26,10 @@ import InstaProfileData from "./pages/Instagram/InstaProfileData";
 // import InstaEditProfile from "./pages/Instagram/InstaEditProfile";
 import BankHome from "./pages/Bank/BankHome";
 import BankTransfer from "./pages/Bank/BankTransfer";
-import { useAuth } from "../contexts/AuthContext";
+import {useAuth} from "../contexts/AuthContext";
 import InstaEditProfile from "./pages/Instagram/InstaEditProfile";
+import HomePage from "../apps/tiktok/pages/HomePage/HomePage";
+import {TikTokRoutes} from "../apps/tiktok/Routes";
 
 debugData([
     {
@@ -37,7 +39,7 @@ debugData([
 ]);
 
 const App: React.FC = () => {
-    const { user, isLoggedIn } = useAuth();
+    const {user, isLoggedIn} = useAuth();
     const [makeCall, setMakeCall] = useState(false);
     /*
   const visibility = useVisibility();
@@ -72,19 +74,17 @@ const App: React.FC = () => {
                     <Route
                         path="*"
                         element={
-                            <>
-                                <Header />
-                                <HomePhone />
-                            </>
+                            <HomePage/>
                         }
                     />
+                    {...TikTokRoutes}
                     <Route
                         path="/calculator"
                         element={
                             <>
-                                <Header />
-                                <NewCalculator />
-                                <HomeBar bottom="20px" />
+                                <Header/>
+                                <NewCalculator/>
+                                <HomeBar bottom="20px"/>
                             </>
                         }
                     />
@@ -92,9 +92,9 @@ const App: React.FC = () => {
                         path="/appstore"
                         element={
                             <>
-                                <Header />
-                                <AppStore />
-                                <HomeBar bottom="10px" />
+                                <Header/>
+                                <AppStore/>
+                                <HomeBar bottom="10px"/>
                             </>
                         }
                     />
@@ -102,12 +102,12 @@ const App: React.FC = () => {
                         path="/phonecall"
                         element={
                             <>
-                                <Header dark={!makeCall} />
+                                <Header dark={!makeCall}/>
                                 <Keyboard
                                     makeCall={makeCall}
                                     setMakeCall={setMakeCall}
                                 />
-                                <HomeBar bottom="30px" dark={true} />
+                                <HomeBar bottom="30px" dark={true}/>
                             </>
                         }
                     />
@@ -115,9 +115,9 @@ const App: React.FC = () => {
                         path="/gallery"
                         element={
                             <>
-                                <Header />
-                                <Gallery />
-                                <HomeBar bottom="20px" />
+                                <Header/>
+                                <Gallery/>
+                                <HomeBar bottom="20px"/>
                             </>
                         }
                     />
@@ -125,7 +125,7 @@ const App: React.FC = () => {
                         path="/battery"
                         element={
                             <>
-                                <Battery />
+                                <Battery/>
                             </>
                         }
                     />
@@ -133,9 +133,9 @@ const App: React.FC = () => {
                         path="/setting"
                         element={
                             <>
-                                <Header dark />
-                                <Settings />
-                                <HomeBar bottom="20px" dark />
+                                <Header dark/>
+                                <Settings/>
+                                <HomeBar bottom="20px" dark/>
                             </>
                         }
                     />
@@ -143,9 +143,9 @@ const App: React.FC = () => {
                         path="/whatsapp"
                         element={
                             <>
-                                <Header />
-                                <Whatsapp />
-                                <HomeBar bottom="30px" />
+                                <Header/>
+                                <Whatsapp/>
+                                <HomeBar bottom="30px"/>
                             </>
                         }
                     />
@@ -153,9 +153,9 @@ const App: React.FC = () => {
                         path="/ex"
                         element={
                             <>
-                                <Header />
-                                <X />
-                                <HomeBar bottom="10px" />
+                                <Header/>
+                                <X/>
+                                <HomeBar bottom="10px"/>
                             </>
                         }
                     />
@@ -166,9 +166,9 @@ const App: React.FC = () => {
                                 path="/InstaHome"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaHome />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaHome/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -176,9 +176,9 @@ const App: React.FC = () => {
                                 path="/InstaCamera"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaCamera />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaCamera/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -186,9 +186,9 @@ const App: React.FC = () => {
                                 path="/InstaSearch"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaSearch />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaSearch/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -196,8 +196,8 @@ const App: React.FC = () => {
                                 path="/instaDirectedMsg"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaDirectedMsg />
+                                        <Header/>
+                                        <InstaDirectedMsg/>
                                     </>
                                 }
                             />
@@ -205,9 +205,9 @@ const App: React.FC = () => {
                                 path="/intaProfileData"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaProfileData />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaProfileData/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -215,9 +215,9 @@ const App: React.FC = () => {
                                 path="/insta-EditProfile"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaEditProfile />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaEditProfile/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -228,9 +228,9 @@ const App: React.FC = () => {
                                 path="/loginIntsa"
                                 element={
                                     <>
-                                        <Header />
-                                        <LoginPage />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <LoginPage/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -238,9 +238,9 @@ const App: React.FC = () => {
                                 path="/InstaSignUp"
                                 element={
                                     <>
-                                        <Header />
-                                        <InstaSignUp />
-                                        <HomeBar bottom="1.5vh" />
+                                        <Header/>
+                                        <InstaSignUp/>
+                                        <HomeBar bottom="1.5vh"/>
                                     </>
                                 }
                             />
@@ -251,9 +251,9 @@ const App: React.FC = () => {
                         path="/bankHome"
                         element={
                             <>
-                                <Header dark={!makeCall} />
-                                <BankHome />
-                                <HomeBar bottom="20px" dark={true} />
+                                <Header dark={!makeCall}/>
+                                <BankHome/>
+                                <HomeBar bottom="20px" dark={true}/>
                             </>
                         }
                     />
@@ -261,9 +261,9 @@ const App: React.FC = () => {
                         path="/bankTransfer"
                         element={
                             <>
-                                <Header dark={!makeCall} />
-                                <BankTransfer />
-                                <HomeBar bottom="20px" dark={true} />
+                                <Header dark={!makeCall}/>
+                                <BankTransfer/>
+                                <HomeBar bottom="20px" dark={true}/>
                             </>
                         }
                     />

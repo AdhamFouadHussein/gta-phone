@@ -1,0 +1,4 @@
+.comments-list {
+    max-height: 500px; /* Set a max-height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}

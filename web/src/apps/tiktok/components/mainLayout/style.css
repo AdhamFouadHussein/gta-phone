@@ -1,0 +1,18 @@
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    border-radius: 50px;
+    color: white;
+    position: relative;
+}
+
+header, main, footer {
+    flex: 0 1 auto; /* Allows the items to grow and shrink as needed */
+}
+
+main {
+    flex: 1; /* This will make the main content take up remaining space */
+}

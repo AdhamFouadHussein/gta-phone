@@ -1,0 +1,11 @@
+.video-feed {
+    /*height: 100vh; !* Full viewport height *!*/
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scroll-snap-type: y mandatory; /* Enable snap scrolling */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer 10+ */
+}
+
+.video-feed::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Safari and Chrome */
+}

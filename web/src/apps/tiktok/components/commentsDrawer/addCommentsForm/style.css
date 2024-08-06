@@ -1,0 +1,32 @@
+.add-comments-form {
+    height: 20%;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    z-index: 20;
+    border-radius: 0px 0px 50px 50px;
+    background-color: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.14);
+
+}
+
+.add-comments-input-container {
+    padding-block: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 19px;
+
+}
+
+.comment-icon-wrapper {
+    display: flex;
+    align-content: center;
+    gap: 22px;
+}
+
+.add-comment-footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+
+}

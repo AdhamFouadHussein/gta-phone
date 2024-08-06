@@ -1,0 +1,9 @@
+.home-indicator-bar {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 55px;
+    border-bottom-right-radius: 55px;
+}

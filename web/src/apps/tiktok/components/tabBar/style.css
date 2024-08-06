@@ -1,0 +1,10 @@
+.tab-bar {
+    display: flex;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    gap: 49px;
+    padding-block: 7px;
+    padding-inline: 16px;
+
+}
