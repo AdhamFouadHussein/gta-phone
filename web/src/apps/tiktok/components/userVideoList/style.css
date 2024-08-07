@@ -1,0 +1,13 @@
+.user-video-list {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+.user-profile-video-wrapper {
+    height: 350px;
+}
+
+.user-profile-video {
+    height: auto;
+}
