@@ -7,4 +7,5 @@ export interface MainLayoutProps {
     homeIndicatorBar?: CSSProperties
     footer: boolean
     mode: "dark" | "light"
+    ref?:any
 }

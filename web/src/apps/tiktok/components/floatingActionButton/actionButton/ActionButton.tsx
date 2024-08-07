@@ -8,7 +8,7 @@ export default function ActionButton({
                                          id
                                      }: ActionButtonProps) {
     return (<div className={'action-button'} onClick={() => onClick(id)}>
-        <img src={iconSrc} alt={label}/>
+        <img className={id == "user" ? "feed-user-avatar" : ""} src={iconSrc} alt={label}/>
         <div className={'action-button-label'}>{label}</div>
     </div>)
 }

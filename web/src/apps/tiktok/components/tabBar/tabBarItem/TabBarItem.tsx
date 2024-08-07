@@ -7,9 +7,10 @@ export default function TabBarItem({label, iconSrc, id, onClick, styles}: TabBar
             style={styles}
             className={'tab-bar-item'}
             onClick={() => onClick(id)}>
-            <img width={id == "addVideo" ? 45 : 25} src={iconSrc}
+            <img width={id == "addVideo" ? 75 : 25} src={iconSrc}
                  alt={label ?? "icon"}/>
-            {label &&
+            {
+                label &&
                 <div className={'tab-bar-item-label'}>{label}</div>
             }
         </div>

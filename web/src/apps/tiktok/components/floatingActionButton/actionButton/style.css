@@ -9,3 +9,9 @@
     text-align: center;
 
 }
+
+.feed-user-avatar {
+    width: 47px;
+    border: 1px solid white;
+    border-radius: 50%;
+}

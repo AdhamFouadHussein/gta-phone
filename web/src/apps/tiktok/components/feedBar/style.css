@@ -5,7 +5,16 @@
     background-color: transparent;
     padding-block: 13px;
     gap: 10px;
+    top: 75px;
+    left: 30%;
+    position: absolute;
+    z-index: 10;
     /*color: white;*/
+
+}
+
+.select-feed-tab {
+    color: red !important;
 }
 
 .feed-bar-label {

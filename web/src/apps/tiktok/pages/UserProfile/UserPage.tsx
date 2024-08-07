@@ -3,9 +3,26 @@ import UserPageHeader from "../../components/userPage/Header/UserPageHeader";
 import UserCard from "../../components/userPage/UserCard/UserCard";
 import UserAvatar from '../../../assets/icons/tiktok/users/test-avatar.svg'
 import useSignupStore from "../../store/signupStore/signupStore";
+import UserVideoList from "../../components/userVideoList/UserVideoList";
+
+const videosList = [{
+    id: "1",
+    url: "https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4"
+
+}, {
+    id: '2',
+    url: "https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4"
+}, {
+    id: '3',
+    url: "https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4"
+}, {
+    id: '4',
+    url: "https://videos.pexels.com/video-files/5752729/5752729-uhd_2560_1440_30fps.mp4"
+}]
+
 
 export default function UserPage() {
-    const state = useSignupStore(); // Zustand action to set password
+    const state = useSignupStore();
 
     return (<MainLayout
         mode={"light"}
@@ -19,7 +36,7 @@ export default function UserPage() {
         <UserPageHeader
             user={{
                 userId: "1",
-                userName: "Jacob West"
+                userName: state.nickname
             }}/>
 
         <UserCard
@@ -33,6 +50,7 @@ export default function UserPage() {
                     following: "38"
                 }
             }}/>
+        <UserVideoList videos={videosList}/>
 
     </MainLayout>)
 }

@@ -36,7 +36,7 @@ export function getTabBarItems({
     }, {
         label: "Me",
         iconSrc: mode == "light" ? accountBlackIcon : accountIcon,
-        id: "tiktok-singUp"
+        id: "tiktok-profile"
     }]
 }
 

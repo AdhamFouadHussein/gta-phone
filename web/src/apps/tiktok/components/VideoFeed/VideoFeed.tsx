@@ -1,28 +1,25 @@
-import {useEffect, useRef} from "react";
+import React from "react";
+import './videoFeedStyle.css';
+import useVideoStore from "../../store/videoStore/videoStore";
+
+const VideoFeed: React.FC = () => {
+    const {currentVideoIndex, videos, nextVideo} = useVideoStore();
 
 
-const VideoFeed = () => {
-    const feedRef = useRef<any>(null);
-
-    const handleScroll = () => {
-
-
-    };
-
-    useEffect(() => {
-        const feedElement = feedRef.current;
-        feedElement.addEventListener('scroll', handleScroll);
-
-        return () => {
-            feedElement.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    const currentVideo = videos[currentVideoIndex];
 
     return (
-        <div className="video-feed" ref={feedRef}>
-            {[1, 2, 3].map((video, index) => (
-                <div key={index}>{video}</div>
-            ))}
+        <div className="video-feed">
+            <video
+                className={'feed-video'}
+                key={currentVideo?.video.id}  // Key to force re-render
+                loop
+                autoPlay
+                onEnded={nextVideo} // Automatically play next video on end
+            >
+                <source src={currentVideo?.video.url} type="video/mp4"/>
+                Your browser does not support the video tag.
+            </video>
         </div>
     );
 };

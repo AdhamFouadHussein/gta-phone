@@ -14,10 +14,11 @@ export default function MainLayout({
                                        statusBarStyles,
                                        homeIndicatorBar,
                                        footer,
-                                       mode
+                                       mode,
+                                       ref
                                    }: MainLayoutProps) {
     const {isOpen} = useDrawerStore();
-    return <div className={'main-layout'} style={styles}>
+    return <div ref={ref} className={'main-layout'} style={styles}>
         <header className={'main-layout-header'}>
             <StatusBar mode={mode} style={statusBarStyles}/>
         </header>

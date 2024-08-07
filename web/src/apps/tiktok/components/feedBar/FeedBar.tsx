@@ -1,9 +1,13 @@
 import './style.css'
+import {useNavigate} from "react-router-dom";
 
-export default function FeedBar() {
+export default function FeedBar({selectedTab}: {
+    selectedTab: "following" | "forYou"
+}) {
+    const navigator = useNavigate()
     return <div className={'feed-bar'}>
-        <div className={'feed-bar-label'}>Following</div>
+        <div onClick={()=>navigator(`/tiktok/following`)} className={`feed-bar-label ${selectedTab == "following" ? "select-feed-tab" : ""}`}>Following</div>
         <div>|</div>
-        <div className={'feed-bar-label'}>For You</div>
+        <div onClick={()=>navigator(`/tiktok/forYou`)} className={`feed-bar-label ${selectedTab == "forYou" ? "select-feed-tab" : ""}`}>For You</div>
     </div>
 }

@@ -7,6 +7,7 @@
     gap: 25px;
     position: absolute;
     right: 13px;
-    bottom: 130px
+    bottom: 130px;
+    z-index: 10;
 
 }

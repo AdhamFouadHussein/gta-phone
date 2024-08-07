@@ -9,6 +9,22 @@
     position: relative;
 }
 
+.main-footer {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    z-index: 10;
+    bottom: 0
+}
+
+.main-layout-header {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    z-index: 10;
+    top: 0
+}
+
 header, main, footer {
     flex: 0 1 auto; /* Allows the items to grow and shrink as needed */
 }
