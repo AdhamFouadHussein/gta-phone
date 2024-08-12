@@ -7,31 +7,39 @@ import twitterIcon from '../../../../assets/icons/tiktok/signUp/twitter.png'
 import './style.css'
 import {useNavigate} from "react-router-dom";
 
-const iconList = [{
-    icon: userIcon,
-    text: "User Phone or Email",
-    ref: "/tiktok-singUp-form"
-}, {
-    icon: facebookIcon,
-    text: "Continue with Facebook",
-    ref: "/tiktok-singUp-form"
-}, {
-    icon: appleIcon,
-    text: "Continue with Apple",
-    ref: "/tiktok-singUp-form"
-}, {
-    icon: googleIcon,
-    text: "Continue with Google",
-    ref: "/tiktok-singUp-form"
-}, {
-    icon: twitterIcon,
-    text: "Continue with Twitter",
-    ref: "/tiktok-singUp-form"
-}]
-export default function SignUpOptionsList({}: SignUpOptionsListProps) {
+export function getIconList({usedIn}: {
+    usedIn: "login" | "register"
+}) {
+    return [{
+        icon: userIcon,
+        text: "User Phone or Email",
+        ref: usedIn === "register" ? `/tiktok-singUp-form` : "/tiktok-login-form"
+    }, {
+        icon: facebookIcon,
+        text: "Continue with Facebook",
+        ref: "/tiktok-singUp-form"
+    }, {
+        icon: appleIcon,
+        text: "Continue with Apple",
+        ref: "/tiktok-singUp-form"
+    }, {
+        icon: googleIcon,
+        text: "Continue with Google",
+        ref: "/tiktok-singUp-form"
+    }, {
+        icon: twitterIcon,
+        text: "Continue with Twitter",
+        ref: "/tiktok-singUp-form"
+    }]
+}
+
+
+export default function SignUpOptionsList({usedIn}: SignUpOptionsListProps) {
     const navigator = useNavigate()
     return (<div className={'singUp-options-list-container'}>
-        {iconList.map((item, index) => {
+        {getIconList({
+            usedIn: usedIn
+        }).map((item, index) => {
             return <div
                 onClick={() => {
                     navigator(item.ref)

@@ -1,6 +1,6 @@
 import MainLayout from "../../components/mainLayout/MainLayout";
 import './style.css'
-import CameraRecorder from "../../components/cameraRecorder/CameraRecorder";
+import ScreenRecorder from "../../components/cameraRecorder/CameraRecorder";
 
 export default function AddVideoPage() {
 
@@ -13,7 +13,7 @@ export default function AddVideoPage() {
         <div style={{
             marginTop: 30
         }}>
-            <CameraRecorder/>
+            <ScreenRecorder/>
         </div>
 
     </MainLayout>)

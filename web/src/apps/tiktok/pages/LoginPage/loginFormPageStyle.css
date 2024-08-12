@@ -1,5 +1,5 @@
 /* Title styling */
-.signup-form-title {
+.login-form-title {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -43,13 +43,13 @@
 }
 
 /* Form styling */
-.sign-up-form {
+.login-up-form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.sign-up-form input {
+.login-up-form input {
     width: 300px;
     padding: 10px;
     margin-bottom: 20px;
@@ -57,14 +57,14 @@
     border-radius: 4px;
 }
 
-.sign-up-form div {
+.login-up-form div {
     text-align: center;
     font-size: 12px;
     color: #999999;
     margin-bottom: 20px;
 }
 
-.sign-up-form button {
+.login-up-form button {
     margin-top: 20px;
     width: 300px;
     padding: 10px;
@@ -75,10 +75,11 @@
     cursor: pointer;
 }
 
-.sign-up-form button:hover {
+.login-up-form button:hover {
     background-color: #333;
 }
-.sign-up-terms{
+
+.login-up-terms {
     font-size: 16px;
     width: 300px;
     text-align: left;

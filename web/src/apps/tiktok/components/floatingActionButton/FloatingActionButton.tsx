@@ -1,14 +1,12 @@
 import {FloatingActionButtonProps} from "./FloatingActionButtonProps";
 import ActionButton from "./actionButton/ActionButton";
 import useDrawerStore from "../../store/commentsStore/commentsStore";
-import useVideoStore from "../../store/videoStore/videoStore";
 import {useNavigate} from "react-router-dom";
 import './style.css'
 
 export default function FloatingActionButton({
                                                  buttons
                                              }: FloatingActionButtonProps) {
-    const {nextVideo} = useVideoStore();
     const {openDrawer} = useDrawerStore();
     const navigator = useNavigate();
     return (
@@ -23,8 +21,6 @@ export default function FloatingActionButton({
                                              }
                                              if (id === "message") {
                                                  openDrawer()
-                                             } else {
-                                                 nextVideo()
                                              }
                                          }}/>
                 })

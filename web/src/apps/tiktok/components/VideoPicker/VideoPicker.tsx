@@ -1,26 +1,50 @@
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
+import galleryIcon from '../../../assets/icons/tiktok/video/uploadIcon.svg';
+import './videoPicker.css'
+import {VideoPickerProps} from "./VideoPickerProps";
 
-const VideoPicker = () => {
-    const [videoSrc, setVideoSrc] = useState(null);
+const VideoPicker = ({getUploadedVideoUrl}: VideoPickerProps) => {
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
         if (file) {
             const videoURL = URL.createObjectURL(file);
-            setVideoSrc(videoURL);
+            getUploadedVideoUrl({
+                videoFIle: file,
+                videoUrl: videoURL
+            });
+        }
+    };
+
+    const handleImageClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
         }
     };
 
     return (
         <div>
-            <input type="file" accept="video/*" onChange={handleFileChange}/>
-            {
-                videoSrc && (
-                    <video controls width="600">
-                        <source src={videoSrc} type="video/mp4"/>
-                        Your browser does not support the video tag.
-                    </video>
-                )}
+            {/* Hidden file input */}
+            <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                style={{display: 'none'}}  // Hide the input
+            />
+            {/* Image that triggers the file input */}
+            <img
+                className={'galleryIcon-icon'}
+                width={32}
+                height={32}
+                src={galleryIcon}
+                onClick={handleImageClick}
+                alt="Upload Video"
+            />
+            <div style={{
+                fontSize: 12
+            }}>upload</div>
         </div>
     );
 };

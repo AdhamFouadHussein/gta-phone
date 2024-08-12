@@ -9,12 +9,13 @@
     left: 30%;
     position: absolute;
     z-index: 10;
-    /*color: white;*/
+    color: darkgrey;
 
 }
 
 .select-feed-tab {
-    color: red !important;
+    color: white !important;
+    font-weight: bold;
 }
 
 .feed-bar-label {

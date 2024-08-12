@@ -1,5 +1,5 @@
 .signup-page-container {
-
+    margin-top: 100px;
 }
 
 .signup-title {
@@ -39,4 +39,5 @@
 .sign-up-link {
     font-weight: 600;
     color: #d6249f;
+    cursor: pointer;
 }
