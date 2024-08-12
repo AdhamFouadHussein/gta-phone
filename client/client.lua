@@ -76,3 +76,10 @@ end)
 
 
 
+RegisterNUICallback('getPhoneNumber', function(data, cb)
+  print('getPhoneNumber callback triggered')
+  local QBCore = exports['qb-core']:GetCoreObject()
+  local Player = QBCore.Functions.GetPlayerData()
+  print('Player Phone Number:', Player.charinfo.phone)
+  cb({ phoneNumber = Player.charinfo.phone })
+end)

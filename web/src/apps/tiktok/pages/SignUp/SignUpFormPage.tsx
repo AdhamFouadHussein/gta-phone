@@ -1,8 +1,9 @@
 import MainLayout from "../../components/mainLayout/MainLayout";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './signUpPageStyle.css'
 import {useNavigate} from "react-router-dom";
 import useSignupStore from "../../store/signupStore/signupStore";
+import { fetchNui } from "../../../../utils/fetchNui";
 
 export default function SignUpFormPage() {
     const [formType, setFormType] = useState<"phone" | "email">("email")
@@ -17,6 +18,32 @@ export default function SignUpFormPage() {
         // Navigate to the next page
         navigator("/tiktok-singUp-password");
     };
+    interface StateType {
+        phoneNumber?: string;
+      }
+    const [state, setState] = useState<StateType>({});
+    useEffect(() => {
+        const fetchPhoneNumber = async () => {
+            try {
+                const retData = await fetchNui<{ phoneNumber: string }>('getPhoneNumber');
+                console.log('Got return data from client scripts:', retData.phoneNumber);
+                setState((prevState) => {
+                    if (prevState.phoneNumber !== retData.phoneNumber) {   
+                        return { ...prevState, phoneNumber: retData.phoneNumber };
+                    }
+                    return prevState;
+                });
+                if (formType === "phone") {
+                    setInputValue(state.phoneNumber || '');
+                }
+            } catch (error) {
+                console.error('Error fetching client data:', error);
+            }
+        };
+    
+        fetchPhoneNumber();
+    }, [formType]);
+
     return (
         <MainLayout
             mode={"light"}
