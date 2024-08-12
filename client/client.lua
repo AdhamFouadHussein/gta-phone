@@ -1,8 +1,18 @@
 local function toggleNuiFrame(shouldShow)
+  nuiFrameVisible = shouldShow
   SetNuiFocus(shouldShow, shouldShow)
   SetNuiFocusKeepInput(shouldShow)
   SendReactMessage('setVisible', shouldShow)
 end
+
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(0)
+    if nuiFrameVisible then
+      DisableControlAction(0, 24, true) -- Disable left mouse button
+    end
+  end
+end)
 
 RegisterCommand('show-nui', function()
   toggleNuiFrame(true)
