@@ -329,10 +329,9 @@ AddEventHandler('fivem-react-boilerplate-lua:TloginUser', function(data)
 
     local source = source -- Get the server ID of the client that triggered the event
 
-    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE (Username = @Username OR Email = @Email) AND PasswordHash = @Password', {
-        ['@Username'] = data.Username,
-        ['@Email'] = data.Email,
-        ['@Password'] = data.Password
+    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE Email = @Email AND PasswordHash = @Password', {
+        ['@Email'] = data.email,
+        ['@Password'] = data.password
     }, function(result)
         if result then
             print('Query executed successfully')
@@ -352,18 +351,15 @@ AddEventHandler('fivem-react-boilerplate-lua:TregisterUser', function(data)
 
     local source = source -- Get the server ID of the client that triggered the event
 
-    exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Users (Username, Email, PasswordHash, FullName, Bio, ProfilePicURL) VALUES (@Username, @Email, @Password, @FullName, @Bio, @ProfilePicURL)', {
-        ['@Username'] = data.Username,
-        ['@Email'] = data.Email,
-        ['@Password'] = data.Password,
-        ['@FullName'] = data.FullName,
-        ['@Bio'] = data.Bio,
-        ['@ProfilePicURL'] = data.ProfilePicURL
+    exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Users (Nickname, Email, PasswordHash) VALUES (@nickname, @email, @password)', {
+        ['@Nickname'] = data.nickname,
+        ['@Email'] = data.email,
+        ['@Password'] = data.password,
     }, function(result)
         if result then
             print('Registered user successfully')
             -- Automatically login the user after registration
-            TriggerEvent('fivem-react-boilerplate-lua:loginUser', data)
+            TriggerServerEvent('fivem-react-boilerplate-lua:TloginUser', data)
         else
             print('Failed to register user')
         end
@@ -453,15 +449,10 @@ AddEventHandler('fivem-react-boilerplate-lua:TupdateUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TupdateUser invoked')
     print('Data received:', json.encode(data))
     local source = source 
-    -- Serialize the Bio field to a JSON string
-    local bioJson = json.encode(data.Bio)
-
     exports.ghmattimysql:execute('UPDATE Phone_TIKTOK_Users SET Username = @Username, Email = @Email, FullName = @FullName, Bio = @Bio, ProfilePicURL = @ProfilePicURL WHERE UserID = @UserID', {
         ['@UserID'] = data.UserID,
         ['@Username'] = data.Username,
-        ['@Email'] = data.Email,
-        ['@FullName'] = data.FullName,
-        ['@Bio'] = bioJson, 
+        ['@Bio'] = data.Bio, 
         ['@ProfilePicURL'] = data.ProfilePicURL
     }, function(result)
         if result then
