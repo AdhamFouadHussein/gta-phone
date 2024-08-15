@@ -2,6 +2,7 @@ import MainLayout from "../../components/mainLayout/MainLayout";
 import {useState} from "react";
 import './loginFormPageStyle.css'
 import {useNavigate} from "react-router-dom";
+import backButton from '../../../assets/icons/tiktok/Left Arrow Icon.svg'
 
 export default function LoginFormPage() {
     const [formType, setFormType] = useState<"phone" | "email">("email")
@@ -20,9 +21,13 @@ export default function LoginFormPage() {
             }}
             footer={false}
         >
-
-            <div className="login-form-title">
-                Login
+            <div className={'login-form-header'}>
+                <div className={'back-button-icon'} onClick={() => navigator(-1)}>
+                    <img src={backButton}/>
+                </div>
+                <div className="login-form-title">
+                    Login
+                </div>
             </div>
             <div className="form-tab-selector">
                 <div

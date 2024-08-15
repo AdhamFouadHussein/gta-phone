@@ -11,6 +11,7 @@ import SetPasswordPage from "./pages/SignUp/SignUpCreatePassword";
 import SignUpCreateNickName from "./pages/SignUp/signUpCreateNickName";
 import ShowUploadedVideoPage from "./pages/ShowUploadedVideoPage/ShowUploadedVideoPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import LoginFormPage from "./pages/LoginPage/LoginFormPage";
 
 export const TikTokRoutes = [
     <Route path="/tiktok/:tab" element={<HomePage/>}/>,
@@ -24,4 +25,5 @@ export const TikTokRoutes = [
     <Route path={"/tiktok-singUp-password"} element={<SetPasswordPage/>}/>,
     <Route path={"/tiktok-singUp-nickname"} element={<SignUpCreateNickName/>}/>,
     <Route path={"/tiktok-login"} element={<LoginPage/>}/>,
+    <Route path={"/tiktok-login-form"} element={<LoginFormPage/>}/>
 ]
