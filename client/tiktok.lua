@@ -258,10 +258,6 @@ end)
 
 RegisterNUICallback('TloginUser', function(data, cb)
     print('loginUser callback triggered')
-    -- If the Bio field is a string, parse it to a JSON object
-    if type(data.Bio) == 'string' then
-        data.Bio = json.decode(data.Bio)
-    end
     TriggerServerEvent('fivem-react-boilerplate-lua:TloginUser', data)
     cb({})
 end)
@@ -280,10 +276,6 @@ RegisterNetEvent('fivem-react-boilerplate-lua:TsendUser')
 AddEventHandler('fivem-react-boilerplate-lua:TsendUser', function(user)
     print('Received user data from server event fivem-react-boilerplate-lua:TsendUser')
     print('User data:', json.encode(user))
-    -- If the Bio field is a string, parse it to a JSON object
-    if type(user.Bio) == 'string' then
-        user.Bio = json.decode(user.Bio)
-    end
     SendNUIMessage({
         type = 'T_USER',
         payload = user
@@ -370,9 +362,6 @@ end)
 RegisterNUICallback('TupdateUser', function(data, cb)
     print('updateUser callback triggered')
     -- If the Bio field is a string, parse it to a JSON object
-    if type(data.Bio) == 'string' then
-        data.Bio = json.decode(data.Bio)
-    end
     TriggerServerEvent('fivem-react-boilerplate-lua:TupdateUser', data)
     cb({})
 end)
@@ -381,10 +370,6 @@ RegisterNetEvent('fivem-react-boilerplate-lua:TsendUpdatedUser')
 AddEventHandler('fivem-react-boilerplate-lua:TsendUpdatedUser', function(updatedUser)
     print('Received updated user data from server event fivem-react-boilerplate-lua:TsendUpdatedUser')
     print('Updated user data:', json.encode(updatedUser))
-    -- If the Bio field is a string, parse it to a JSON object
-    if type(updatedUser.Bio) == 'string' then
-        updatedUser.Bio = json.decode(updatedUser.Bio)
-    end
     SendNUIMessage({
         type = 'T_UPDATED_USER',
         payload = updatedUser
