@@ -1,13 +1,14 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MainLayout from "../../components/mainLayout/MainLayout";
 import './signUpCreateNickNameStyle.css';
 import {useNavigate} from "react-router-dom";
 import useSignupStore from "../../store/signupStore/signupStore";
+import {fetchNui} from "../../../../utils/fetchNui";
 
 export default function SignUpCreateNickName() {
     const [nickname, setNickname] = useState("");
     const navigator = useNavigate()
-    const setNicknameInStore = useSignupStore(state => state.setNickname); // Zustand action to set nickname
+    const {setNickname: setNicknameInStore, email, password, nickname: userName} = useSignupStore(); // Zustand action to set nickname
 
     const handleNicknameChange = (e: any) => {
         setNickname(e.target.value);
@@ -15,8 +16,25 @@ export default function SignUpCreateNickName() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setNicknameInStore(nickname); // Set the nickname in the Zustand store
-        navigator("/tiktok-profile"); // Navigate to the profile page
+        fetchNui('TregisterUser', {email: email, password: password, nickname: userName});
     };
+
+
+    useEffect(() => {
+        window.addEventListener('message', handleNuiMessage);
+
+        return () => {
+            window.removeEventListener('message', handleNuiMessage);
+        };
+    }, []);
+    const handleNuiMessage = (event: MessageEvent) => {
+        const {data} = event;
+        if (data.type === 'T_USER') {
+            console.log(data)
+            navigator("/tiktok"); // Navigate to the profile page
+        }
+    };
+
 
     return (
         <MainLayout
