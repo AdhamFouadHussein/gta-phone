@@ -350,7 +350,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TregisterUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TregisterUser invoked')
     print('Data received:', json.encode(data))
 
-    local source = source
+    local source = source -- Get the server ID of the client that triggered the event
 
     exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Users (Nickname, Email, PasswordHash) VALUES (@nickname, @email, @password)', {
         ['@nickname'] = data.nickname,
@@ -360,7 +360,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TregisterUser', function(data)
         if result then
             print('Registered user successfully')
             -- Automatically login the user after registration
-            TriggerClientEvent('fivem-react-boilerplate-lua:TloginUser', data)
+            TriggerEvent('fivem-react-boilerplate-lua:TloginUser', data)
         else
             print('Failed to register user')
         end
