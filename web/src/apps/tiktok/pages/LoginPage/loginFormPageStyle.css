@@ -3,8 +3,29 @@
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: left;
+    text-align: left;
+    flex: 2;
+    margin-left: 40px;
+}
+
+.login-form-header {
     margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding-inline: 10px;
+
+}
+
+.back-button-icon {
+    align-content: center;
+    text-align: left;
+    flex: 1;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 
 /* Tab selector container */
