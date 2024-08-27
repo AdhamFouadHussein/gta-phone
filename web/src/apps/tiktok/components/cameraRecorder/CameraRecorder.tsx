@@ -3,7 +3,7 @@ import "./style.css";
 import recordIcon from "../../../assets/icons/tiktok/video/Record Button.svg";
 import recordingIcon from "../../../assets/icons/tiktok/video/recordingIcon.svg";
 import emojiEffect from "../../../assets/icons/tiktok/video/Effects Illustration.svg";
-import checkIcon from "../../../assets/icons/tiktok/video/check.svg"; // Replace with actual path
+import checkIcon from "../../../assets/icons/tiktok/video/checkIcon.svg"; // Replace with actual path
 import cancelIcon from "../../../assets/icons/tiktok/video/cancel.svg"; // Replace with actual path
 import useUploadedVideoStore from "../../store/uplaodedVideoStore/uplaodedVideoStore";
 import VideoPicker from "../VideoPicker/VideoPicker";
