@@ -66,15 +66,11 @@ export default function ScreenRecorder() {
     };
 
     renderCanvas();
-    setTimeout(() => {
-      renderCanvas();
-      resizeCanvas();
-    }, 20);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, []);
+  }, [videoUrl]);
 
   const startRecording = () => {
     if (!isCanvasReady) return;
@@ -186,7 +182,11 @@ export default function ScreenRecorder() {
           />
           <div className="preview-controls">
             <button onClick={submitVideo} className="submit-button">
-              <img src={checkIcon} alt="Submit" width={24} height={24} />
+              {uploadProgress ? (
+                `${Number(uploadProgress).toFixed(2)}%`
+              ) : (
+                <img src={checkIcon} alt="Submit" width={24} height={24} />
+              )}
             </button>
             <button onClick={removeRecordedVideo} className="remove-button">
               <img src={cancelIcon} alt="Cancel" width={24} height={24} />
