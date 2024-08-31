@@ -264,10 +264,6 @@ end)
 
 RegisterNUICallback('TregisterUser', function(data, cb)
     print('registerUser callback triggered')
-    -- If the Bio field is a string, parse it to a JSON object
-    if type(data.Bio) == 'string' then
-        data.Bio = json.decode(data.Bio)
-    end
     TriggerServerEvent('fivem-react-boilerplate-lua:TregisterUser', data)
     cb({})
 end)

@@ -322,6 +322,42 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetStory', function(data)
     end)
 end)
 
+RegisterServerEvent('fivem-react-boilerplate-lua:TregisterUser')
+AddEventHandler('fivem-react-boilerplate-lua:TregisterUser', function(data)
+    print('Server event fivem-react-boilerplate-lua:TregisterUser invoked')
+    print('Data received:', json.encode(data))
+
+    local source = source
+
+    exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Users (Nickname, Email, PasswordHash) VALUES (@nickname, @Email, @PasswordHash)', {
+        ['@nickname'] = data.nickname,
+        ['@Email'] = data.email,
+        ['@PasswordHash'] = data.password,
+    }, function(result)
+        if result then
+            print('Registered user successfully')
+            print(json.encode(data))
+            -- Automatically login the user after registration
+            exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE Email = @Email AND PasswordHash = @PasswordHash', {
+                ['@Email'] = data.email,
+                ['@PasswordHash'] = data.password
+            }, function(loginResult)
+                if loginResult and loginResult[1] then
+                    print('Auto-login successful after registration')
+                    TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, loginResult[1])
+                    print('Sent user data to client after registration')
+                else
+                    print('Auto-login failed after registration')
+                    TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, nil)
+                end
+            end)
+        else
+            print('Failed to register user')
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, nil) 
+        end
+    end)
+end)
+
 RegisterServerEvent('fivem-react-boilerplate-lua:TloginUser')
 AddEventHandler('fivem-react-boilerplate-lua:TloginUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TloginUser invoked')
@@ -329,43 +365,22 @@ AddEventHandler('fivem-react-boilerplate-lua:TloginUser', function(data)
 
     local source = source
 
-    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE Email = @Email AND PasswordHash = @Password', {
+    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE Email = @Email AND PasswordHash = @PasswordHash', {
         ['@Email'] = data.email,
-        ['@Password'] = data.password
+        ['@PasswordHash'] = data.password
     }, function(result)
-        if #result > 0 then
+        if result and result[1] then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
             TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, result[1])
             print('Sent user data to client')
         else
             print('No matching user found')
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, nil) 
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendUser', source, nil)
         end
     end)
 end)
 
-RegisterServerEvent('fivem-react-boilerplate-lua:TregisterUser')
-AddEventHandler('fivem-react-boilerplate-lua:TregisterUser', function(data)
-    print('Server event fivem-react-boilerplate-lua:TregisterUser invoked')
-    print('Data received:', json.encode(data))
-
-    local source = source -- Get the server ID of the client that triggered the event
-
-    exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Users (Nickname, Email, PasswordHash) VALUES (@nickname, @email, @password)', {
-        ['@nickname'] = data.nickname,
-        ['@email'] = data.email,
-        ['@password'] = data.password,
-    }, function(result)
-        if result then
-            print('Registered user successfully')
-            -- Automatically login the user after registration
-            TriggerEvent('fivem-react-boilerplate-lua:TloginUser', data)
-        else
-            print('Failed to register user')
-        end
-    end)
-end)
 
 RegisterServerEvent('fivem-react-boilerplate-lua:TsavePost')
 AddEventHandler('fivem-react-boilerplate-lua:TsavePost', function(data)
