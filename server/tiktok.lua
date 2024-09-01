@@ -1,21 +1,4 @@
-RegisterServerEvent('fivem-react-boilerplate-lua:TaddPost')
-AddEventHandler('fivem-react-boilerplate-lua:TaddPost', function(post, user)
-    print('Server event fivem-react-boilerplate-lua:TaddPost invoked')
-    print('Received post data:', post.Caption , post.Location)
-    print('Received user data:', user.UserID)
-    exports.ghmattimysql:execute('INSERT INTO phone_ig_posts (UserID, ImageURL, Caption, Location) VALUES (@user, @imageURL, @caption, @location)', {
-        ['@user'] = user.UserID,
-        ['@imageURL'] = post.ImageURL,
-        ['@caption'] = post.Caption,
-        ['@location'] = post.Location
-    }, function(result)
-        if result then
-            print('Post added successfully')
-        else
-            print('Failed to add post')
-        end
-    end)
-end)
+
 RegisterServerEvent('fivem-react-boilerplate-lua:TgetPosts')
 AddEventHandler('fivem-react-boilerplate-lua:TgetPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetPosts invoked')
@@ -572,6 +555,25 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetAllMessages', function(data)
             print('Sent messages to client')
         else
             print('Failed to execute query')
+        end
+    end)
+end)
+
+RegisterServerEvent('fivem-react-boilerplate-lua:TSendVideo')
+AddEventHandler('fivem-react-boilerplate-lua:TSendVideo', function(data)
+    print('Server event fivem-react-boilerplate-lua:TSendVideo invoked')
+    print('Data received:', json.encode(data))
+    local source = source
+    exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Posts (UserID, VideoURL, Caption, Location) VALUES (@user, @videoURL, @caption, @location)', {
+        ['@user'] = data.UserID,
+        ['@videoURL'] = data.VideoURL,
+        ['@caption'] = data.Caption,
+        ['@location'] = data.Location
+    }, function(result)
+        if result then
+            print('Video added successfully')
+        else
+            print('Failed to add video')
         end
     end)
 end)

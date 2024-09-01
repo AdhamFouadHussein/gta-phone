@@ -452,3 +452,9 @@ AddEventHandler('fivem-react-boilerplate-lua:TsendAllMessages', function(allMess
         print('Sent NUI message with all messages data')
     end
 end)
+
+RegisterNUICallback('TSendVideo', function(data, cb)
+    print('TSendVideo callback triggered')
+    TriggerServerEvent('fivem-react-boilerplate-lua:TSendVideo', data)
+    cb({})
+end)
