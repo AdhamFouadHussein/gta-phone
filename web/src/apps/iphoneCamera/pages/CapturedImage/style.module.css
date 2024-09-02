@@ -1,0 +1,29 @@
+.container {
+  background-color: black;
+  height: 100%;
+  border-radius: 50px;
+}
+.image {
+  height: 600px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+}
+.actionbar {
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.deleteIcon {
+  cursor: pointer;
+  color: white !important;
+  background-color: white !important;
+}

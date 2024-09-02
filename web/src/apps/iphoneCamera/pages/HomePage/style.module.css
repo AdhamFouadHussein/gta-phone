@@ -1,0 +1,77 @@
+.container {
+  background-color: black;
+  height: 100%;
+  border-radius: 50px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+}
+.actionBar {
+  display: flex;
+  justify-content: space-evenly;
+  padding-block: 8px;
+  position: absolute;
+  bottom: 75px;
+  width: 100%;
+  align-items: center;
+
+  /* background-color: yellow; */
+}
+.icon {
+  cursor: pointer;
+}
+.cameraView {
+  width: 100%;
+  height: 575px;
+  border-top-right-radius: 50px;
+  border-top-left-radius: 50px;
+  /* background-color: yellow; */
+}
+.cameraType {
+  position: absolute;
+  bottom: 170px;
+  width: 100%;
+  margin-top: 20px;
+  /* background-color: red; */
+  padding-inline: 18px;
+  display: flex;
+  padding-block: 8px;
+  align-items: center;
+  gap: 20px;
+  justify-content: left;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+.selectedType {
+  color: #ffd60a;
+}
+
+.capturedImageContainer {
+  height: 500px !important;
+}
+.capturedImage {
+  height: 500px !important;
+}
+.flashOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000; /* Ensure it's on top of everything */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.flashActive {
+  opacity: 0.8;
+}
