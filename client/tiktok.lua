@@ -357,7 +357,6 @@ end)
 
 RegisterNUICallback('TupdateUser', function(data, cb)
     print('updateUser callback triggered')
-    -- If the Bio field is a string, parse it to a JSON object
     TriggerServerEvent('fivem-react-boilerplate-lua:TupdateUser', data)
     cb({})
 end)

@@ -4,7 +4,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetPosts invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT P.* FROM Phone_TIKTOK_Posts P JOIN Phone_TIKTOK_Follows F ON P.UserID = F.FollowingID WHERE F.FollowerID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -39,7 +39,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetUser invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users WHERE UserID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -58,7 +58,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TfollowUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TfollowUser invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Follows (FollowerID, FollowingID) VALUES (@FollowerID, @FollowingID)', {
         ['@FollowerID'] = data.FollowerID,
@@ -77,7 +77,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TunfollowUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TunfollowUser invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('DELETE FROM Phone_TIKTOK_Follows WHERE FollowerID = @FollowerID AND FollowingID = @FollowingID', {
         ['@FollowerID'] = data.FollowerID,
@@ -96,7 +96,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetFollows', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetFollows invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Follows WHERE FollowerID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -115,7 +115,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetFollowers', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetFollowers invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Follows WHERE FollowingID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -134,7 +134,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TlikePost', function(data)
     print('Server event fivem-react-boilerplate-lua:TlikePost invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Likes (UserID, PostID) VALUES (@UserID, @PostID)', {
         ['@UserID'] = data.UserID,
@@ -153,7 +153,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TunlikePost', function(data)
     print('Server event fivem-react-boilerplate-lua:TunlikePost invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('DELETE FROM Phone_TIKTOK_Likes WHERE UserID = @UserID AND PostID = @PostID', {
         ['@UserID'] = data.UserID,
@@ -172,7 +172,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TaddComment', function(data)
     print('Server event fivem-react-boilerplate-lua:TaddComment invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_Comments (UserID, PostID, Comment) VALUES (@UserID, @PostID, @Comment)', {
         ['@UserID'] = data.UserID,
@@ -193,7 +193,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetComments', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetComments invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Comments WHERE PostID = @PostID', { ['@PostID'] = data.PostID, }, function(result)
         if result then
@@ -212,7 +212,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetLikes', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetLikes invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute([[
         SELECT Phone_TIKTOK_Likes.UserID, Phone_TIKTOK_Users.Username 
@@ -291,7 +291,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetStory', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetStory invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Stories WHERE UserID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -370,7 +370,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TsavePost', function(data)
     print('Server event fivem-react-boilerplate-lua:TsavePost invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('INSERT INTO Phone_TIKTOK_SavedPosts (UserID, PostID) VALUES (@UserID, @PostID)', {
         ['@UserID'] = data.UserID,
@@ -390,7 +390,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TunsavePost', function(data)
     print('Server event fivem-react-boilerplate-lua:TunsavePost invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('DELETE FROM Phone_TIKTOK_SavedPosts WHERE UserID = @UserID AND PostID = @PostID', {
         ['@UserID'] = data.UserID,
@@ -410,7 +410,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetSavedPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetSavedPosts invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_SavedPosts WHERE UserID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -428,7 +428,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetOwnPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetOwnPosts invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Posts WHERE UserID = @UserID', { ['@UserID'] = data.UserID, }, function(result)
         if result then
@@ -448,9 +448,11 @@ AddEventHandler('fivem-react-boilerplate-lua:TupdateUser', function(data)
     print('Server event fivem-react-boilerplate-lua:TupdateUser invoked')
     print('Data received:', json.encode(data))
     local source = source 
-    exports.ghmattimysql:execute('UPDATE Phone_TIKTOK_Users SET Username = @Username, Email = @Email, FullName = @FullName, Bio = @Bio, ProfilePicURL = @ProfilePicURL WHERE UserID = @UserID', {
+    exports.ghmattimysql:execute('UPDATE Phone_TIKTOK_Users SET Username = @Username, Email = @Email, Nickname = @Nickname, Bio = @Bio, ProfilePicURL = @ProfilePicURL WHERE UserID = @UserID', {
         ['@UserID'] = data.UserID,
         ['@Username'] = data.Username,
+        ['@Email'] = data.Email,
+        ['@Nickname'] = data.Nickname,
         ['@Bio'] = data.Bio, 
         ['@ProfilePicURL'] = data.ProfilePicURL
     }, function(result)
@@ -462,13 +464,12 @@ AddEventHandler('fivem-react-boilerplate-lua:TupdateUser', function(data)
         end
     end)
 end)
-
 RegisterServerEvent('fivem-react-boilerplate-lua:TgetAllPosts')
 AddEventHandler('fivem-react-boilerplate-lua:TgetAllPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetAllPosts invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
+    local source = source
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Posts', {}, function(result)
         if result then
@@ -487,9 +488,8 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetAllUsers', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetAllUsers invoked')
     print('Data received:', json.encode(data))
 
-    local source = source -- Get the server ID of the client that triggered the event
-
-    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Users', {}, function(result)
+    local source = source 
+    exports.ghmattimysql:execute('SELECT UserID, Username, Nickname, Email, Bio, ProfilePicURL FROM Phone_TIKTOK_Users', {}, function(result)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
