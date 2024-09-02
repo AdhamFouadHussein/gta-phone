@@ -264,10 +264,6 @@ end)
 
 RegisterNUICallback('TregisterUser', function(data, cb)
     print('registerUser callback triggered')
-    -- If the Bio field is a string, parse it to a JSON object
-    if type(data.Bio) == 'string' then
-        data.Bio = json.decode(data.Bio)
-    end
     TriggerServerEvent('fivem-react-boilerplate-lua:TregisterUser', data)
     cb({})
 end)
@@ -361,7 +357,6 @@ end)
 
 RegisterNUICallback('TupdateUser', function(data, cb)
     print('updateUser callback triggered')
-    -- If the Bio field is a string, parse it to a JSON object
     TriggerServerEvent('fivem-react-boilerplate-lua:TupdateUser', data)
     cb({})
 end)
@@ -455,4 +450,10 @@ AddEventHandler('fivem-react-boilerplate-lua:TsendAllMessages', function(allMess
         })
         print('Sent NUI message with all messages data')
     end
+end)
+
+RegisterNUICallback('TSendVideo', function(data, cb)
+    print('TSendVideo callback triggered')
+    TriggerServerEvent('fivem-react-boilerplate-lua:TSendVideo', data)
+    cb({})
 end)
