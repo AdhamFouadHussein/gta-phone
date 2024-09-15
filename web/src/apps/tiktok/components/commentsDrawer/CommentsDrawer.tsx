@@ -86,8 +86,8 @@ export default function CommentsDrawer() {
           return {
             user: {
               comment: item.Comment,
-              name: "",
-              avatar: "",
+              name: item.Nickname,
+              avatar: "https://randomuser.me/api/portraits/women/2.jpg",
             },
             loveCount: 0,
           };

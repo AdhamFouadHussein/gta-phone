@@ -111,6 +111,21 @@ const initialVideos: VideoFeedItem[] = [
   },
 ];
 
+// [
+//   {
+//     VideoURL:
+//       "https://api.telegram.org/file/bot7159569495:AAG4-S4j9bhe8E7sbMaQdTRJp_FzU5B3ukY/documents/file_16.webm",
+//     Timestamp: 1726409285000.0,
+//     Caption: "dsdsad",
+//     likeCount: 0,
+//     PostID: 6,
+//     UserID: 1,
+//     commentCount: 0,
+//     user: { Email: "d@gmail.com", Nickname: "omar", UserID: 1 },
+//     Location: "Cairo, Egypt",
+//   },
+// ];
+
 export default function HomePage() {
   const { currentVideoIndex, setVideos, videos } = useVideoStore();
   const feedRef = useRef<HTMLDivElement>(null);
@@ -134,29 +149,31 @@ export default function HomePage() {
     console.log(data.type);
     console.log(data.payload);
     const videos: any[] = data.payload;
-    setVideos(
-      videos.map((item) => {
-        return {
-          user: {
-            avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-            id: item.UserID,
-            name: "",
-          },
-          video: {
-            description: item.Caption,
-            id: item.PostID,
-            keywords: [],
-            title: "",
-            url: item.VideoURL,
-          },
-          statistic: {
-            commentsCount: "0",
-            isILiked: true,
-            likeCounts: "0",
-          },
-        };
-      })
-    );
+    if (data.type == "T_ALL_POSTS") {
+      setVideos(
+        videos.map((item) => {
+          return {
+            user: {
+              avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+              id: item.UserID,
+              name: item.user.Nickname,
+            },
+            video: {
+              description: item.Caption,
+              id: item.PostID,
+              keywords: [],
+              title: "",
+              url: item.VideoURL,
+            },
+            statistic: {
+              commentsCount: item.commentCount,
+              isILiked: true,
+              likeCounts: item.likeCount,
+            },
+          };
+        })
+      );
+    }
   };
 
   return (
