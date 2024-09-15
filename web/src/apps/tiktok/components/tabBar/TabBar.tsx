@@ -19,6 +19,7 @@ export default function TabBar({ mode }: TabBarProps) {
     >
       {getTabBarItems({
         mode: mode,
+        userId: String(user?.id),
         isUserAuth: Boolean(user),
       }).map((item) => {
         return (

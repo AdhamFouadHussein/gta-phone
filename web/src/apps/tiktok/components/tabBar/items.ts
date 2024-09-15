@@ -14,9 +14,11 @@ import addVideoIconBlack from "../../../assets/icons/tiktok/tabBar/Button Shape 
 export function getTabBarItems({
   mode,
   isUserAuth,
+  userId,
 }: {
   mode: "dark" | "light";
   isUserAuth: boolean;
+  userId: string;
 }): Omit<TabBarItemProps, "onClick" | "styles">[] {
   return [
     {
@@ -42,7 +44,7 @@ export function getTabBarItems({
     {
       label: "Me",
       iconSrc: mode == "light" ? accountBlackIcon : accountIcon,
-      id: isUserAuth ? "tiktok-profile/1" : "tiktok-login",
+      id: isUserAuth ? `tiktok-profile/${userId}` : "tiktok-login",
     },
   ];
 }

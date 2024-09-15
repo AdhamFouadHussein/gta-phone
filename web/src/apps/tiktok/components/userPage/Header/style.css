@@ -1,15 +1,70 @@
 .user-page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-block: 11px;
-    padding-inline: 20px;
-    border-bottom: 1px solid rgba(134, 135, 139, 0.32);
-    margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 11px;
+  padding-inline: 20px;
+  border-bottom: 1px solid rgba(134, 135, 139, 0.32);
+  margin-top: 50px;
 }
 
 .user-name {
-    font-size: 17px;
-    font-weight: bold;
-    color: black;
+  font-size: 17px;
+  font-weight: bold;
+  color: black;
+}
+.add-user-icon {
+  cursor: pointer;
+}
+/* Styling for the menu icon */
+.menu-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown menu styling (hidden by default) */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Show dropdown when triggered */
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Dropdown item button */
+.dropdown-item {
+  padding: 10px 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  color: black;
+}
+
+/* Dropdown item hover effect */
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Add some space for layout */
+img {
+  margin-left: 10px;
 }

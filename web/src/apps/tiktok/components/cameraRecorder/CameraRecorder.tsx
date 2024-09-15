@@ -8,6 +8,8 @@ import cancelIcon from "../../../assets/icons/tiktok/video/cancel.svg"; // Repla
 import useUploadedVideoStore from "../../store/uplaodedVideoStore/uplaodedVideoStore";
 import VideoPicker from "../VideoPicker/VideoPicker";
 import { useNavigate } from "react-router-dom";
+import { fetchNui } from "../../../../utils/fetchNui";
+import { useAuthStore } from "../../store/userStore/userStore";
 
 const loadScript = (src: string) => {
   return new Promise<void>((resolve, reject) => {
@@ -19,7 +21,8 @@ const loadScript = (src: string) => {
     document.head.appendChild(script);
   });
 };
-
+const TELEGRAM_BOT_TOKEN = "7159569495:AAG4-S4j9bhe8E7sbMaQdTRJp_FzU5B3ukY";
+const TELEGRAM_CHAT_ID = "-1002177545075";
 export default function ScreenRecorder() {
   const [isRecording, setIsRecording] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -30,6 +33,41 @@ export default function ScreenRecorder() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { setVideo } = useUploadedVideoStore();
   const router = useNavigate();
+  const [description, setDescription] = useState<string>("");
+  const { user } = useAuthStore();
+  const [telegramVideoUrl, setTelegramVideoUrl] = useState<string>("");
+
+  useEffect(() => {
+    window.addEventListener("message", handleNuiMessage);
+
+    return () => {
+      window.removeEventListener("message", handleNuiMessage);
+    };
+  }, []);
+
+  const handleNuiMessage = (event: MessageEvent) => {
+    const { data } = event;
+    if (data.type === "T_USER") {
+    }
+  };
+
+  // // Handle form submission
+  // const handleSubmit = () => {
+  //   // Send email and password using fetchNui
+  //   console.log({
+  //     VideoURL: telegramVideoUrl,
+  //     UserID: user?.id,
+  //     Caption: description,
+  //     Location: "Cairo, Egypt",
+  //   });
+
+  //   fetchNui("TSendVideo", {
+  //     VideoURL: telegramVideoUrl,
+  //     UserID: user?.id,
+  //     Caption: description,
+  //     Location: "Cairo, Egypt",
+  //   });
+  // };
 
   useEffect(() => {
     const resizeCanvas = () => {
@@ -119,7 +157,7 @@ export default function ScreenRecorder() {
     });
 
     const formData = new FormData();
-    formData.append("chat_id", "-1002177545075");
+    formData.append("chat_id", TELEGRAM_CHAT_ID);
     formData.append("video", blob, "video.webm");
 
     const xhr = new XMLHttpRequest();
@@ -136,11 +174,22 @@ export default function ScreenRecorder() {
       }
     };
 
-    xhr.onload = () => {
+    xhr.onload = async () => {
       if (xhr.status === 200) {
         console.log("Video uploaded successfully");
+        const response = JSON.parse(xhr.responseText);
+        const url = await getVideoUrl(response.result.document.file_id);
+        console.log(url);
+        setTelegramVideoUrl(url);
         setVideoUrl(null);
         setUploadProgress(null);
+
+        fetchNui("TSendVideo", {
+          VideoURL: url,
+          UserID: user?.id,
+          Caption: description,
+          Location: "Cairo, Egypt",
+        });
       } else {
         console.error("Error uploading video:", xhr.responseText);
         setUploadProgress(null);
@@ -159,6 +208,17 @@ export default function ScreenRecorder() {
     setVideoUrl(null);
     recordedChunksRef.current = [];
   };
+  async function getVideoUrl(fileId: string) {
+    const response = await fetch(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
+    );
+    const data = await response.json();
+    const filePath = data.result.file_path;
+    console.log(
+      `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`
+    );
+    return `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
+  }
 
   return (
     <div className="camera-wrapper">
@@ -177,9 +237,15 @@ export default function ScreenRecorder() {
             controls
             style={{
               width: "100%",
-              height: "75%",
+              height: "70%",
             }}
           />
+          <input
+            className="uploaded-video-description"
+            value={description}
+            onChange={(value) => setDescription(value.target.value)}
+          />
+
           <div className="preview-controls">
             <button onClick={submitVideo} className="submit-button">
               {uploadProgress ? (
