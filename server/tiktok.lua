@@ -1,4 +1,3 @@
-
 RegisterServerEvent('fivem-react-boilerplate-lua:TgetPosts')
 AddEventHandler('fivem-react-boilerplate-lua:TgetPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetPosts invoked')
@@ -14,16 +13,27 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetPosts', function(data)
             local postsWithUsers = {} -- Table to hold posts with their respective user data
 
             for i, post in ipairs(result) do
-                exports.ghmattimysql:execute('SELECT UserID, Username, Email, FullName, Bio, ProfilePicURL FROM Phone_TIKTOK_Users WHERE UserID = @UserID', { ['@UserID'] = post.UserID }, function(userResult)
+                exports.ghmattimysql:execute('SELECT UserID, Username, Email, Nickname, Bio, ProfilePicURL FROM Phone_TIKTOK_Users WHERE UserID = @UserID', { ['@UserID'] = post.UserID }, function(userResult)
                     if userResult and #userResult > 0 then
                         post.user = userResult[1] -- Append the user data to the post
-                        table.insert(postsWithUsers, post) -- Add the post to the table
 
-                        -- If this is the last post, trigger the client event
-                        if i == #result then
-                            TriggerClientEvent('fivem-react-boilerplate-lua:TsendPosts', source, postsWithUsers) -- Send the event to the correct client
-                            print('Sent posts data to client')
-                        end
+                        -- Query to get likes count
+                        exports.ghmattimysql:execute('SELECT COUNT(*) as likesCount FROM Phone_TIKTOK_Likes WHERE PostID = @PostID', { ['@PostID'] = post.PostID }, function(likesResult)
+                            post.likesCount = likesResult[1].likesCount
+
+                            -- Query to get comments count
+                            exports.ghmattimysql:execute('SELECT COUNT(*) as commentsCount FROM Phone_TIKTOK_Comments WHERE PostID = @PostID', { ['@PostID'] = post.PostID }, function(commentsResult)
+                                post.commentsCount = commentsResult[1].commentsCount
+
+                                table.insert(postsWithUsers, post) -- Add the post to the table
+
+                                -- If this is the last post, trigger the client event
+                                if i == #result then
+                                    TriggerClientEvent('fivem-react-boilerplate-lua:TsendPosts', source, postsWithUsers)
+                                    print('Sent posts data to client')
+                                end
+                            end)
+                        end)
                     else
                         print('Failed to fetch user for post')
                     end
@@ -45,7 +55,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetUser', function(data)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TFETCH_USER', source, result[1]) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TFETCH_USER', source, result[1])
             print('Sent user data to client')
         else
             print('Failed to execute query')
@@ -102,7 +112,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetFollows', function(data)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendFollows', source, result) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendFollows', source, result)
             print('Sent follows data to client')
         else
             print('Failed to execute query')
@@ -121,7 +131,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetFollowers', function(data)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendFollowers', source, result) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendFollowers', source, result)
             print('Sent followers data to client')
         else
             print('Failed to execute query')
@@ -180,7 +190,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TaddComment', function(data)
         ['@Comment'] = data.Comment
     }, function(result)
         if result then
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendComment', source, data) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendComment', source, data)
             print('Added comment successfully')
         else
             print('Failed to add comment')
@@ -195,11 +205,16 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetComments', function(data)
 
     local source = source 
 
-    exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Comments WHERE PostID = @PostID', { ['@PostID'] = data.PostID, }, function(result)
+    exports.ghmattimysql:execute([[
+        SELECT Phone_TIKTOK_Comments.*, Phone_TIKTOK_Users.Username, Phone_TIKTOK_Users.ProfilePicURL, Phone_TIKTOK_Users.Nickname
+        FROM Phone_TIKTOK_Comments 
+        INNER JOIN Phone_TIKTOK_Users ON Phone_TIKTOK_Comments.UserID = Phone_TIKTOK_Users.UserID 
+        WHERE Phone_TIKTOK_Comments.PostID = @PostID
+    ]], { ['@PostID'] = data.PostID, }, function(result)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendComments', source, result) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendComments', source, result)
             print('Sent comments data to client')
         else
             print('Failed to execute query')
@@ -215,7 +230,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetLikes', function(data)
     local source = source 
 
     exports.ghmattimysql:execute([[
-        SELECT Phone_TIKTOK_Likes.UserID, Phone_TIKTOK_Users.Username 
+        SELECT Phone_TIKTOK_Likes.*, Phone_TIKTOK_Users.Username, Phone_TIKTOK_Users.ProfilePicURL, Phone_TIKTOK_Users.Nickname
         FROM Phone_TIKTOK_Likes 
         INNER JOIN Phone_TIKTOK_Users ON Phone_TIKTOK_Likes.UserID = Phone_TIKTOK_Users.UserID 
         WHERE Phone_TIKTOK_Likes.PostID = @PostID
@@ -223,7 +238,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetLikes', function(data)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendLikes', source, result) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendLikes', source, result)
             print('Sent likes data to client')
         else
             print('Failed to execute query')
@@ -297,7 +312,7 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetStory', function(data)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendStory', source, result) -- Send the event to the correct client
+            TriggerClientEvent('fivem-react-boilerplate-lua:TsendStory', source, result)
             print('Sent story data to client')
         else
             print('Failed to execute query')
@@ -469,14 +484,49 @@ AddEventHandler('fivem-react-boilerplate-lua:TgetAllPosts', function(data)
     print('Server event fivem-react-boilerplate-lua:TgetAllPosts invoked')
     print('Data received:', json.encode(data))
 
-    local source = source
+    local source = source 
 
     exports.ghmattimysql:execute('SELECT * FROM Phone_TIKTOK_Posts', {}, function(result)
         if result then
             print('Query executed successfully')
             print('Query result:', json.encode(result))
-            TriggerClientEvent('fivem-react-boilerplate-lua:TsendAllPosts', source, result) 
-            print('Sent all posts data to client')
+            
+            local postsWithUsers = {}
+
+            for i, post in ipairs(result) do
+                exports.ghmattimysql:execute('SELECT UserID, Username, Email, Nickname, Bio, ProfilePicURL FROM Phone_TIKTOK_Users WHERE UserID = @UserID', { ['@UserID'] = post.UserID }, function(userResult)
+                    if userResult and #userResult > 0 then
+                        post.user = userResult[1]
+
+                        -- Fetch like count
+                        exports.ghmattimysql:execute('SELECT COUNT(*) as likeCount FROM Phone_TIKTOK_Likes WHERE PostID = @PostID', { ['@PostID'] = post.PostID }, function(likeResult)
+                            if likeResult and #likeResult > 0 then
+                                post.likeCount = likeResult[1].likeCount
+
+                                -- Fetch comment count
+                                exports.ghmattimysql:execute('SELECT COUNT(*) as commentCount FROM Phone_TIKTOK_Comments WHERE PostID = @PostID', { ['@PostID'] = post.PostID }, function(commentResult)
+                                    if commentResult and #commentResult > 0 then
+                                        post.commentCount = commentResult[1].commentCount
+                                        table.insert(postsWithUsers, post)
+
+                                        -- If this is the last post, trigger the client event
+                                        if i == #result then
+                                            TriggerClientEvent('fivem-react-boilerplate-lua:TsendAllPosts', source, postsWithUsers)
+                                            print('Sent all posts data to client')
+                                        end
+                                    else
+                                        print('Failed to fetch comment count for post')
+                                    end
+                                end)
+                            else
+                                print('Failed to fetch like count for post')
+                            end
+                        end)
+                    else
+                        print('Failed to fetch user for post')
+                    end
+                end)
+            end
         else
             print('Failed to execute query')
         end
